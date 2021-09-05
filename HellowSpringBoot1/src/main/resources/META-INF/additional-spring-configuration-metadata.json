@@ -1,0 +1,47 @@
+{"properties": [
+  {
+    "name": "jpa.hibernate.ddl-auto",
+    "type": "java.lang.String",
+    "description": "A description for 'jpa.hibernate.ddl-auto'"
+  },
+  {
+    "name": "jpa.hibernate.show-sql",
+    "type": "java.lang.String",
+    "description": "A description for 'jpa.hibernate.show-sql'"
+  },
+  {
+    "name": "spring.datasource.max-active",
+    "type": "java.lang.String",
+    "description": "A description for 'spring.datasource.max-active'"
+  },
+  {
+    "name": "spring.datasource.max-idle",
+    "type": "java.lang.String",
+    "description": "A description for 'spring.datasource.max-idle'"
+  },
+  {
+    "name": "spring.datasource.min-idle",
+    "type": "java.lang.String",
+    "description": "A description for 'spring.datasource.min-idle'"
+  },
+  {
+    "name": "spring.datasource.initial-size",
+    "type": "java.lang.String",
+    "description": "A description for 'spring.datasource.initial-size'"
+  },
+  {
+    "name": "pring.thymeleaf.prefix",
+    "type": "java.lang.String",
+    "description": "A description for 'pring.thymeleaf.prefix'"
+  },
+  {
+    "name": "upload.picture.path",
+    "type": "java.lang.String",
+    "description": "A description for 'upload.picture.path'"
+  },
+  {
+    "name": "web.upload-path",
+    "type": "java.lang.String",
+    "description": "A description for 'web.upload-path'"
+  }
+]}

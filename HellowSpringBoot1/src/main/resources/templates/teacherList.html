@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8" />
+<title>辅导员清单</title>
+<link rel="stylesheet" type="text/css"
+	href="../me/jquery-easyui-1.6.6/themes/default/easyui.css" />
+<link rel="stylesheet" type="text/css"
+	href="../me/jquery-easyui-1.6.6/themes/icon.css" />
+<link rel="stylesheet" type="text/css"
+	href="../me/jquery-easyui-1.6.6/demo.css" />
+<script type="text/javascript" src="../me/jquery-easyui-1.6.6/jquery.min.js"></script>
+<script type="text/javascript"
+	src="../me/jquery-easyui-1.6.6/jquery.easyui.min.js"></script>
+<link rel="stylesheet" type="text/css" href="../css/test.css" />
+<!-- <script type="text/javascript" src="js/address.js"></script> -->
+<script type="text/javascript" src="../js/datagrid2.js"></script>		
+<script type="text/javascript" src="../js/validator.js"></script>
+<!-- <script type="text/javascript" src="js/search.js"></script>
+<script type="text/javascript" src="js/datagrid-filter.js"></script>  -->
+
+<script type="text/javascript">
+$(function(){
+	displayMsg();
+	//changetitle();
+		 $('#collegeId').combobox({
+		 prompt:'请选择...',
+		 valueField:'id',
+         textField: 'name',
+         method:'get',
+         url :'/center/collegeList',
+         onSelect:function(rec){
+             var url1= '/center/majorList2?id='+rec.id;
+             //$("#majorId").val("");
+             $("#majorId").combobox('setValue','')
+             $('#majorId').combobox('reload',url1);
+            }
+		
+	}); 
+    $('#majorId').combobox({
+    	prompt:'请选择...',
+    	  valueField:'id',
+          textField: 'name',
+          method:'get',
+         
+          onSelect:function(rec){
+              var url1= '/center/classList2?id='+rec.id;
+              //$("#majorId").val("");
+              $("#classId").combobox('setValue','')
+              $('#classId').combobox('reload',url1);
+             }
+	});
+    $('#classId').combobox({
+    	   prompt:'请选择...',
+    	  valueField:'id',
+          textField: 'name',
+         
+	});
+	 $('#collegeId2').combobox({
+		 prompt:'请选择...',
+		 valueField:'id',
+         textField: 'name',
+         method:'get',
+         url :'/center/collegeList',
+         onSelect:function(rec){
+             var url1= '/center/majorList2?id='+rec.id;
+             //$("#majorId").val("");
+             $("#majorId2").combobox('setValue','')
+             $('#majorId2').combobox('reload',url1);
+            }
+		
+	}); 
+    $('#majorId2').combobox({
+    	prompt:'请选择...',
+    	  valueField:'id',
+          textField: 'name',
+          method:'get',
+         
+          onSelect:function(rec){
+              var url1= '/center/classList2?id='+rec.id;
+              //$("#majorId").val("");
+              $("#classId2").combobox('setValue','')
+              $('#classId2').combobox('reload',url1);
+             }
+	});
+    $('#classId2').combobox({
+    	   prompt:'请选择...',
+    	  valueField:'id',
+          textField: 'name',
+         
+	});
+	 $('#collegeId3').combobox({
+		 prompt:'请选择...',
+		 valueField:'id',
+         textField: 'name',
+         method:'get',
+         url :'/center/collegeList',
+         onSelect:function(rec){
+             var url1= '/center/majorList2?id='+rec.id;
+             //$("#majorId").val("");
+             $("#majorId3").combobox('setValue','')
+             $('#majorId3').combobox('reload',url1);
+            }
+		
+	}); 
+    $('#majorId3').combobox({
+    	prompt:'请选择...',
+    	  valueField:'id',
+          textField: 'name',
+          method:'get',
+         
+          onSelect:function(rec){
+              var url1= '/center/classList2?id='+rec.id;
+              //$("#majorId").val("");
+              $("#classId3").combobox('setValue','')
+              $('#classId3').combobox('reload',url1);
+             }
+	});
+    $('#classId3').combobox({
+    	   prompt:'请选择...',
+    	  valueField:'id',
+          textField: 'name',
+         
+	});
+});
+/* function changetitle(){
+	//$("#dg").attr("title","122377");
+	var titleClass = "[[${session.titleClass}]]";
+	$("#dg").datagrid("getPanel").panel("setTitle",titleClass);
+	
+}; */
+function displayMsg() {  
+		$('#dg').datagrid('getPager').pagination({  
+			 pageSize: 10,//每页显示的记录条数，默认为10   
+			 pageList: [10,20,50,100,200],//可以设置每页记录条数的列表   
+			 beforePageText: '第',//'第',//页数文本框前显示的汉字   
+			 afterPageText: '页    共 {pages} 页', //'页    共 {pages} 页',  
+			 displayMsg: '当前显示 {from} - {to} 条记录   共 {total} 条记录' 
+	   });  
+	};
+function openEdit(){
+	var selectedRows = $("#dg").datagrid('getSelections');
+	if (selectedRows.length != 1) {
+		$.messager.alert("系统提示", "请选择一条要编辑的数据！");
+		return;
+	}
+	var row = selectedRows[0];
+	
+	$("#fmedit").form("load", row);
+	$("#dlg-edit").dialog("open");
+	//var classIds = [[${session.classId}]];
+	//$.messager.alert('系统提示', classIds, "warning");
+	//alter(classId);
+}
+function savefm() {
+                      
+	$.ajax({
+		url : "/center/teacherAdd",
+		type : "POST",
+		data : $('#fmadd').serialize(),
+		/*
+		 * onSubmit : function() { return $(this).form("validate"); },
+		 */
+		success : function(res) {
+			
+			if (res === "success") {
+				$("" + ".easyui-datagrid").datagrid("reload");
+				$.messager.alert("系统提示", "保存成功");
+				$("#dlg-add").dialog("close");
+				$('#dlg-add').form('clear');
+				
+				
+				
+			} if (res === "error1"){
+				$.messager.alert('系统提示', '专业已存在!', "warning");
+				//$.messager.alert("系统提示", "账号已存在");
+			} 
+			if (res === "error"){
+				$.messager.alert("系统提示", "系统异常");
+			}
+		},
+		error : function() {
+			 $.messager.show({
+                 title : '提示',
+                 msg : '系统错误，请联系管理员------'
+             });
+			console.log("ajax error");
+			$("#dlg").dialog("close");
+			
+		}
+	})
+        
+};
+
+function editfm() {
+    
+	$.ajax({
+		url : "/center/teacherEdit",
+		type : "POST",
+		data : $('#fmedit').serialize(),
+		/*
+		 * onSubmit : function() { return $(this).form("validate"); },
+		 */
+		success : function(res) {
+			
+			if (res === "success") {
+				$("" + ".easyui-datagrid").datagrid("reload");
+				$.messager.alert("系统提示", "保存成功");
+				$("#dlg-edit").dialog("close");
+				$('#dlg-edit').form('clear');
+				
+				
+				
+			} if (res === "error1"){
+				$.messager.alert('系统提示', '学生已存在!', "warning");
+				//$.messager.alert("系统提示", "账号已存在");
+			} 
+			if (res === "error"){
+				$.messager.alert("系统提示", "系统异常");
+			}
+		},
+		error : function() {
+			 $.messager.show({
+                 title : '提示',
+                 msg : '系统错误，请联系管理员------'
+             });
+			console.log("ajax error");
+			$("#dlg-edit").dialog("close");
+			
+		}
+	})
+        
+};
+function deleteRows(){
+	var rows = $('#dg').datagrid('getChecked');
+	//console.log(rows);
+	if(rows.length==0){
+		$.messager.alert('操作提示', '请至少选择一行删除!', "warning");
+	}
+	for (var i = rows.length - 1; i >= 0; i--) {
+		var rowIndex = $('#dg').datagrid('getRowIndex', rows[i]);
+		//console.log(rowIndex);
+		var id = rows[i].id;
+		$.ajax({
+			type : "GET",
+			url : "/center/teacherDel?id=" + id,
+			async : false,
+			success : function(data) {
+
+				$('#dg').datagrid('deleteRow', rowIndex);
+			},
+			error : function(data) {
+				
+				alert("删除失败");
+			}
+		});
+
+	}
+}
+/* function searchWebSite() {
+	var majorLike = $("#majorLike").val;
+	var collegeId = $("#collegeId").combobox("getValue");
+    $("#dg").datagrid("load", {
+        "majorLike": majorLike ,
+        "collegeId": collegeId 
+
+    });
+} */
+function searchWebSite() {
+    $("#dg").datagrid("load", {
+        "nameLike": $("#nameLike").val(),
+        "userLike": $("#userLike").val(),
+        "collegeId2": $("#collegeId2").val(),
+        "majorId2": $("#majorId2").val(),
+        "classId2": $("#classId2").val(),
+      /*   "collegeId": $("#collegeId").val(), */
+
+    });
+    
+};
+function returnClass(){
+	 window.location = "../lgclass";
+}
+
+</script> 
+</head>
+<body>
+ 
+	 <!-- <input  type = "hidden" th:value = "${session.classId}" id = "classIds"/> -->
+	<table id="dg" class="easyui-datagrid" title="用户信息"
+		style="width: 100%; height: 400px"
+		data-options="iconCls:'icon-edit',rownumbers:true,collapsible:true,url:'/center/TeacherList',method:'get',fitColumns:true,onClickCell:onClickCell,autoRowHeight:false,
+				pagination:true,
+				pageSize:10"
+		toolbar="#tb">
+		<thead>
+		
+			<tr>
+				<th data-options="field:'ck',checkbox:true"></th>
+			   <!--  <th data-options="field:'addressId',align:'center'" >ID</th> -->
+			   <!-- <th data-options="field:'username',align:'left',halign: 'left'" width="20%">专业名称</th>	
+			   <th data-options="field:'password',align:'left',halign: 'left'" width="20%">专业名称</th>	 -->
+			   <th data-options="field:'username',align:'left',halign: 'left'" width="10%">用户账号</th>	
+			   <th data-options="field:'password',align:'left',halign: 'left'" width="10%">账号密码</th>	
+			   <th data-options="field:'name',align:'left',halign: 'left'" width="10%">用户姓名</th>	
+			   <th data-options="field:'sex',align:'left',halign: 'left'" width="4%">性别</th>
+<!-- 			   <th data-options="field:'className',align:'left',halign: 'left'" width="10%">班级名称</th>	
+				<th data-options="field:'majorName',align:'left',halign: 'left'" width="10%">专业名称</th> -->
+				<th data-options="field:'collegeName',align:'left',halign: 'left'" width="10%">学院名称</th>
+				<th data-options="field:'telephone',align:'left',halign: 'left'" width="10%">联系方式</th>
+				<th data-options="field:'mail',align:'left',halign: 'left'" width="15%">E-mail邮箱</th>
+				<th data-options="field:'address',align:'left',halign: 'left'" width="15%">家庭地址</th>
+				<!-- <th data-options="field:'message',align:'left',halign: 'left'" width="20%">专业信息</th>
+				<th data-options="field:'collegeName',align:'left',halign: 'left'" width="20%">所属学院</th> -->
+		</thead>
+
+	</table>
+
+	<div id="tb">
+		<div>
+			<a href="javascript:void(0)" class="easyui-linkbutton"
+				iconCls="icon-add" plain="true" onclick="$('#dlg-add').dialog('open')">添加</a>
+				<a href="javascript:openEdit()" class="easyui-linkbutton"
+				iconCls="icon-edit" plain="true">修改</a>
+			<a href="javascript:deleteRows()" class="easyui-linkbutton"
+				iconCls="icon-remove" plain="true">删除</a> 
+			<!-- <a href="javascript:returnClass()" class="easyui-linkbutton"
+				iconCls="icon-undo" plain="true">返回</a>  -->
+
+		</div>
+				<div>
+                &nbsp;用户姓名：&nbsp;<input type="text" id="nameLike" size="10"  />
+                &nbsp;用户账号：&nbsp;<input type="text" id="userLike" size="10"  />
+                &nbsp;所属学院：&nbsp;<input id="collegeId2" name="collegeId2" class="easyui-combobox" style="height : 25px; width :100px"/>
+			  <!--   &nbsp;所属专业：&nbsp;<input id="majorId2" name="majorId2" class="easyui-combobox" style="height : 25px; width :100px"/>
+				&nbsp;所属班级：&nbsp;<input id="classId2" name="classId2" class="easyui-combobox" style="height : 25px; width :100px"/> -->
+	
+                <!-- &nbsp;所属学院：&nbsp;<input id="collegeId" class="easyui-combobox" name="collegeId"
+						editable="true" panelHeight="200px" value="" style = "height : 25px"
+						data-options="valueField:'id',textField:'name',url:'/center/collegeList',prompt:'请选择...'"> -->
+                <a href="javascript:searchWebSite()" class="easyui-linkbutton" iconCls="icon-search" plain="true">搜索</a>
+
+            </div>
+	</div>
+	
+	<div id="dlg-add" class="easyui-dialog"
+		style="width: 350px; height: 350px; padding: 10px 20px" closed="true"
+		buttons="#dlg-buttons" title="添加信息">
+		<form method="post" id="fmadd" class="easyui-from">
+			<table cellpadding="5">
+					<tr>
+					<td>用户账号:</td>
+					<td><input class="easyui-textbox" type="text" name="username"></input></td>
+				</tr>
+				 <tr>
+					<td>用户名称:</td>
+					<td><input class="easyui-textbox" type="text" name="name"></input></td>
+				</tr>
+				<tr>
+					<td>性别:</td>
+					<td><input type="radio" name="sex" value="男" checked="checked" />男
+						<input type="radio" name="sex" value="女" />女</td>
+				</tr>
+				<tr>
+					<td>所属学院:</td>
+					<td><input id="collegeId3" name="collegeId3" class="easyui-combobox" /></td>
+				</tr>
+			<!-- 	<tr>
+					<td>所属专业:</td>
+					<td><input id="majorId3" name="majorId3" class="easyui-combobox" /></td>
+				</tr>
+				<tr>
+					<td>所属班级:</td>
+					<td><input id="classId3" name="classId3" class="easyui-combobox" /></td>
+				</tr>	 -->
+				 <tr>
+					<td>联系方式:</td>
+					<td><input class="easyui-textbox" type="text" name="telephone"></input></td>
+				</tr>
+				 <tr>
+					<td>E-mail:</td>
+					<td><input class="easyui-textbox" type="text" name="mail"></input></td>
+				</tr>
+				 <tr>
+					<td>家庭地址：</td>
+					<td><input class="easyui-textbox" type="text" name="address"></input></td>
+				</tr>			
+			
+			</table>
+		</form>
+	</div>
+	
+	<div id="dlg-edit" class="easyui-dialog"
+		style="width: 350px; height: 350px; padding: 10px 20px" closed="true"
+		buttons="#dlg-buttons-edit" title="修改信息">
+		<form method="post" id="fmedit" class="easyui-from">
+			<table cellpadding="5">
+			
+								
+				<tr>
+				<input  type="hidden" name="id"></input>
+				<!-- <input  type="hidden" name="classId"></input>
+				<input  type="hidden" name="majorId"></input>
+				<input  type="hidden" name="classId"></input> -->
+				<input  type="hidden" name="password"></input>
+				<tr>
+					<td>学生账号:</td>
+					<td><input class="easyui-textbox" type="text" name="username"></input></td>
+				</tr>
+				 <tr>
+					<td>学生名称:</td>
+					<td><input class="easyui-textbox" type="text" name="name"></input></td>
+				</tr>
+				<tr>
+					<td>性别:</td>
+					<td><input type="radio" name="sex" value="男" checked="checked" />男
+						<input type="radio" name="sex" value="女" />女</td>
+				</tr>
+				<tr>
+					<td>所属学院:</td>
+					<td><input id="collegeId" name="collegeId" class="easyui-combobox" /></td>
+				</tr>
+			<!-- 	<tr>
+					<td>所属专业:</td>
+					<td><input id="majorId" name="majorId" class="easyui-combobox" /></td>
+				</tr>
+				<tr>
+					<td>所属班级:</td>
+					<td><input id="classId" name="classId" class="easyui-combobox" /></td>
+				</tr>	 -->
+				 <tr>
+					<td>联系方式:</td>
+					<td><input class="easyui-textbox" type="text" name="telephone"></input></td>
+				</tr>
+				 <tr>
+					<td>E-mail:</td>
+					<td><input class="easyui-textbox" type="text" name="mail"></input></td>
+				</tr>
+				 <tr>
+					<td>家庭地址：</td>
+					<td><input class="easyui-textbox" type="text" name="address"></input></td>
+				</tr>
+
+			</table>
+		</form>
+	</div>
+
+
+	<div id="dlg-buttons" style="text-align: center">
+		<a href="javascript:savefm()" class="easyui-linkbutton"
+			iconCls="icon-ok">保存</a> <a href="javascript:void()"
+			class="easyui-linkbutton" iconCls="icon-cancel"
+			onclick="$('#dlg-add').dialog('close')">关闭</a>
+	</div>
+	<div id="dlg-buttons-edit" style="text-align: center">
+		<a href="javascript:editfm()" class="easyui-linkbutton"
+			iconCls="icon-ok">保存</a> <a href="javascript:void()"
+			class="easyui-linkbutton" iconCls="icon-cancel"
+			onclick="$('#dlg-edit').dialog('close')">关闭</a>
+	</div>
+
+
+
+</body>
+</html>

@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>修改密码</title>
+<link rel="stylesheet" type="text/css"
+	href="me/jquery-easyui-1.6.6/themes/default/easyui.css" />
+<link rel="stylesheet" type="text/css"
+	href="me/jquery-easyui-1.6.6/themes/icon.css" />
+<link rel="stylesheet" type="text/css"
+	href="me/jquery-easyui-1.6.6/demo.css" />
+<!-- <link rel="stylesheet" type="text/css" href="css/main.css" /> -->
+<script type="text/javascript" src="me/jquery-easyui-1.6.6/jquery.min.js"></script>
+<script type="text/javascript"
+	src="me/jquery-easyui-1.6.6/jquery.easyui.min.js"></script>
+	<script type="text/javascript" src="js/pwd.js"></script>
+
+</head>
+<body>
+	<!-- <div style="margin:100px 0;"></div> -->
+	<div class="easyui-panel"  style="width:60%;padding:30px 60px;border-style:none" >
+	<form method="post" id="pwdedit" class="easyui-from">
+		<div style="margin-bottom:20px">
+			<div>原密码:</div>
+			<input id ="oldpwd" class="easyui-textbox" name="oldpwd" type="password" data-options="required:true,validType:'pwd',novalidate:true" style="width:50%;height:32px">
+		</div>
+		<div style="margin-bottom:20px">
+			<div>新密码:</div>
+			<input id ="newpwd" class="easyui-textbox" name="newpwd" type="password" style="width:50%;height:32px"data-options="required:true,validType:'pwd',novalidate:true"  >
+		</div>
+		<div style="margin-bottom:20px">
+			<div>在输入一次:</div>
+			<input id ="repwd" class="easyui-textbox" name="repwd" type="password" style="width:50%;height:32px" data-options="required:true,validType:'pwd',novalidate:true" >
+		</div>
+		
+		<div>
+			<a href="javascript:pwdEdit()" class="easyui-linkbutton"  style="width:50%;height:32px">修改</a>
+		</div>
+		</form>
+	</div>
+</body>
+
+
+</html>

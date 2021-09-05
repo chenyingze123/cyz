@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>导入</title>
+<link rel="stylesheet" type="text/css"
+	href="me/jquery-easyui-1.6.6/themes/default/easyui.css" />
+<link rel="stylesheet" type="text/css"
+	href="me/jquery-easyui-1.6.6/themes/icon.css" />
+<link rel="stylesheet" type="text/css"
+	href="me/jquery-easyui-1.6.6/demo.css" />
+<script type="text/javascript" src="me/jquery-easyui-1.6.6/jquery.min.js"></script>
+<script type="text/javascript"
+	src="me/jquery-easyui-1.6.6/jquery.easyui.min.js"></script>
+<link rel="stylesheet" type="text/css" href="css/test.css" />
+<!-- <script type="text/javascript" src="js/address.js"></script> -->
+<script type="text/javascript" src="js/datagrid2.js"></script>		
+<script type="text/javascript" src="js/validator.js"></script>
+<script type="text/javascript" src="js/page.js"></script>
+
+<!-- <script type="text/javascript" src="js/search.js"></script>
+<script type="text/javascript" src="js/datagrid-filter.js"></script>  -->
+<style >.icon-filter{
+			background:url('filter.png') no-repeat center center;
+		}</style>
+</head>
+<body>
+<div data-options="region:'north'">
+				<form id="form2" method="post" enctype="multipart/form-data">
+					<table width="100%" border="0" cellpadding="5" cellspacing="0">
+						<tr>
+							<td align="center" width="20%">
+								<font style="font-size: 13">请选择文件:</font>
+							</td>
+							<td width="55%" valign="middle">
+								<input type="text" id="filename" name="filename" style="width: 100%;height: 25px;" readonly="readonly"/>
+							</td>
+							<td width="25%;">
+								<a href="javascript:;" class="file">
+									<font style="font-size: 14">选择文件</font>
+								    <input type="file" name="myfile" id="myfile" accept="application/vnd.ms-excel" onChange="getFilename2();">
+								</a>
+							</td>
+						</tr>
+						<tr>
+							<td align="center">
+								<font style="font-size: 13">验证进度:</font>
+							</td>
+							<td colspan="2">
+								<div id="p1" class="easyui-progressbar" style="width:90%;"></div>
+							</td>
+						</tr>
+						<tr>
+							<td align="center">
+								<font style="font-size: 13">验证时间:</font>
+							</td>
+							<td colspan="2">
+								<font style="font-size: 13">
+									&emsp;<span id="spendTime1"></span>
+								</font>
+							</td>
+						</tr>
+						<tr>
+							<td align="center">
+								<font style="font-size: 13">导入进度:</font>
+							</td>
+							<td colspan="2">
+								<div id="p2" class="easyui-progressbar" style="width:90%;"></div>
+							</td>
+						</tr>
+						<tr>
+							<td align="center">
+								<font style="font-size: 13">导入时间:</font>
+							</td>
+							<td colspan="2">
+								<font style="font-size: 13">
+									&emsp;<span id="spendTime2"></span>
+								</font>
+							</td>
+						</tr>
+					</table>
+				</form>							
+</div>
+<div data-options="region:'center'">
+			<table border="0" cellpadding="0" cellspacing="0" style="width:100%">
+				<tbody><tr>
+					<td width="25%;">
+						
+					</td>
+					
+					<td align="center" >
+					<span id="drbutton" style="display:block" >
+							<a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-search" style="width: 120px;" onClick="checkAndImportStudentData();">验证并导入</a></span>
+					</td><td width="12px;"></td>
+					<td align="center"><span  id="qxbutton" style="display:block">
+						<a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-cancel" style="width: 120px;" onClick="closeDialog('dlg1');">取&emsp;消</a></span>
+					</td>
+					
+				
+					<td width="25%;">
+						
+					</td>
+				</tr>
+			</tbody></table>
+	
+</div>
+</body>
+</html>

@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8" />
+<title>Login</title>
+<link rel="stylesheet" type="text/css"
+	href="me/jquery-easyui-1.6.6/themes/default/easyui.css" />
+<link rel="stylesheet" type="text/css"
+	href="me/jquery-easyui-1.6.6/themes/icon.css" />
+<link rel="stylesheet" type="text/css"
+	href="me/jquery-easyui-1.6.6/demo.css" />
+<script type="text/javascript" src="me/jquery-easyui-1.6.6/jquery.min.js"></script>
+<script type="text/javascript"
+	src="me/jquery-easyui-1.6.6/jquery.easyui.min.js"></script>
+<style>	
+	body
+{
+	background-image:url('me/123.jpg');
+	background-position: center center;
+	background-attachment: fixed;
+	background-size: cover;
+	background-color: #464646;
+	background-size: cover;
+	background-repeat:no-repeat;
+}
+</style>
+
+</head>
+<body>
+<div style="margin-left:30%;margin-top:10%;">
+<div class="easyui-panel" title="用户登录" style="width:50%;padding:30px 0px 20px 15%">
+		<form name="form" accept-charset="utf-8"  action="/loginxx" method="post">
+		<div style="margin-bottom:10px">
+			<input class="easyui-textbox"id="username" name="username" style="width:80%;height:40px;padding:12px" data-options="prompt:'Username',iconCls:'icon-man',iconWidth:38">
+		</div>
+		<div style="margin-bottom:20px">
+			<input class="easyui-textbox" type="password"id="password"  name="password" style="width:80%;height:40px;padding:12px" data-options="prompt:'Password',iconCls:'icon-lock',iconWidth:38">
+		</div>
+		<div style="margin-bottom:20px">
+			<select panelHeight="auto"
+						class="easyui-combobox" id="userType" name="userType" style="width:80%;height:40px;padding:12px" editable="false" >
+							<!-- <option value="" selected="selected">全部</option> -->
+							<option value="1"selected="selected">学生</option>
+							<option value="2" >教师</option>	
+							<option value="3">辅导员</option>
+							<option value="4" >管理员</option>							
+				  </select>
+		</div>
+	<!-- 	<div style="margin-bottom:20px">
+			<input type="checkbox" checked="checked">
+			<span>Remember me</span>
+		</div> -->
+		<div>
+			<!--  <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-ok'" style="padding:5px 0px;width:100%;"onclick="$('#dlg').dialog('open')">
+				<span style="font-size:14px;">Login</span>
+			</a> -->
+			<input type="submit" value="登录" style="padding:5px 0px; width:80%;"/>
+		</div>
+		</form>
+	</div>
+	</div>
+
+</body>
+</html>

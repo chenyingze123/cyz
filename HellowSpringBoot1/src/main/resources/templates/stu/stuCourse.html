@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8" />
+<title>学生课程信息</title>
+<link rel="stylesheet" type="text/css"
+	href="../me/jquery-easyui-1.6.6/themes/default/easyui.css" />
+<link rel="stylesheet" type="text/css"
+	href="../me/jquery-easyui-1.6.6/themes/icon.css" />
+<link rel="stylesheet" type="text/css"
+	href="../me/jquery-easyui-1.6.6/demo.css" />
+<script type="text/javascript" src="../me/jquery-easyui-1.6.6/jquery.min.js"></script>
+<script type="text/javascript"
+	src="../me/jquery-easyui-1.6.6/jquery.easyui.min.js"></script>
+<link rel="stylesheet" type="text/css" href="../css/test.css" />
+<script type="text/javascript" src="../js/datagrid.js"></script>
+<script type="text/javascript" src="../js/datagrid2.js"></script>
+<script type="text/javascript" src="../js/validator.js"></script>
+
+		
+<script>
+var Sex =[{"sexId":1,"sexName":"男"},{"sexId":0,"sexName":"女"}];
+$(function(){
+	displayMsg();		
+})
+  function displayMsg() {  
+		$('#dg').datagrid('getPager').pagination({  
+			 pageSize: 10,//每页显示的记录条数，默认为10   
+			 pageList: [10,20,50,100,200],//可以设置每页记录条数的列表   
+			 beforePageText: '第',//'第',//页数文本框前显示的汉字   
+			 afterPageText: '页    共 {pages} 页', //'页    共 {pages} 页',  
+			 displayMsg: '当前显示 {from} - {to} 条记录   共 {total} 条记录' 
+	   });  
+	};
+</script>		
+</head>
+<body>
+
+	
+	<table id="dg" class="easyui-datagrid" title="课程列表"
+		style="width: 100%; height: 400px"
+		data-options="iconCls:'icon-edit',rownumbers:true,collapsible:true,url:'/student/courseList',method:'get',fitColumns:true,onClickCell:onClickCell,autoRowHeight:false,
+				pagination:true"
+		toolbar="">
+		<thead>
+			<tr>
+				<!-- <th data-options="field:'ck',checkbox:true"></th> -->
+				
+				<!-- <th data-options="field:'username',align:'left',halign: 'left'" width="15%">学生账号</th> -->
+<!-- 				<th data-options="field:'typeId',align:'left',halign: 'left'" width="15%">请假类型</th>
+				<th data-options="field:'starttime',align:'left',halign: 'left'" width="15%">开始时间</th>
+				<th data-options="field:'endtime',align:'left',halign: 'left'" width="15%">结束时间</th>
+				<th data-options="field:'message',align:'left',halign: 'left'" width="30%">请假理由</th>
+				<th data-options="field:'isused',align:'left',halign: 'left'" width="30%">审核状态</th> -->
+				<th data-options="field:'name',align:'left',halign: 'left'" width="20%">课程名称</th>
+				<th data-options="field:'message',align:'left',halign: 'left'" width="20%">课程信息</th>
+				<th data-options="field:'teacherName',align:'left',halign: 'left'" width="20%">教师名称</th>
+				<th data-options="field:'collegeName',align:'left',halign: 'left'" width="20%">所属学院</th>
+			</tr>
+		</thead>
+		<tbody>
+   <tr>
+      <td>1</td>     
+      <td>生病</td>
+      <td>2019-03-23 13:00:00.000</td>
+      <td>2019-03-23 13:00:00.000</td>
+      <td>感冒了</td>
+      <td>审核中</td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td>其他</td>
+      <td>2019-03-23 13:00:00.000</td>
+      <td>2019-03-23 13:00:00.000</td>
+      <td>回家吃饭</td>
+      <td>拒绝</td>
+    </tr>
+		
+		</tbody>
+
+	</table>
+
+	<div id="tb">
+		<div>
+			<a href="javascript:void(0)" class="easyui-linkbutton"
+				iconCls="icon-add" plain="true" onclick="$('#dlg').dialog('open')">请假</a>
+			<!-- <a href="javascript:acceptrows()" class="easyui-linkbutton"
+				iconCls="icon-save" plain="true">保存</a> <a
+				href="javascript:openEdit()" class="easyui-linkbutton"
+				iconCls="icon-edit" plain="true">修改</a> -->
+			<!--  <a
+				href="javascript:getChanges()" class="easyui-linkbutton"
+				data-options="iconCls:'icon-search',plain:true">GetChanges</a> <a
+				href="javascript:reject()" class="easyui-linkbutton"
+				data-options="iconCls:'icon-undo',plain:true">Reject</a> -->
+			<!-- <a href="javascript:void(0)" class="easyui-linkbutton"
+				iconCls="icon-cut" plain="true" onclick="$('#dlg').dialog('open')">剪切</a> -->
+			<a href="javascript:deleteRows()" class="easyui-linkbutton"
+				iconCls="icon-remove" plain="true">销假</a> 
+				<!-- <span>username:</span> 
+				<input id="username" style="line-height: 20px; border: 1px solid #ccc">
+			<span>realname:</span> 
+			<input id="realName" style="line-height: 20px; border: 1px solid #ccc"> 
+			<a href="" class="easyui-linkbutton" plain="true" onclick="doSearch()">Search</a> -->
+
+
+		</div>
+		<!-- <div>
+                &nbsp;用户账号：&nbsp;<input type="text" id="s_name" size="20" onkeydown="if(event.keyCode==13) searchWebSite()" /> &nbsp;密码：&nbsp;
+                <input type="text" id="s_word" size="20" onkeydown="if(event.keyCode==13) searchWebSite()" />
+                
+                <a href="javascript:searchWebSite()" class="easyui-linkbutton" iconCls="icon-search" plain="true">搜索</a>
+            </div> -->
+            		
+	</div>
+	<div id="dlg" class="easyui-dialog"
+		style="width: 300px; height: 400px; padding: 10px 20px" closed="true"
+		buttons="#dlg-buttons">
+		<form method="post" id="fm" class="easyui-from">
+			<table cellpadding="5">
+				<tr>
+					<td>账号:</td>
+					<td><input class="easyui-textbox" type="text" name="username"
+						data-options="required:true,validType:'username',novalidate:true,prompt:'6-16字节,允许字母_数字'" ></input></td>
+				</tr>
+				<tr>
+					<td>密码:</td>
+					<td><input class="easyui-textbox" type="text" name="password"
+						data-options="required:true,validType:'pwds',novalidate:true,prompt:'6-16字节,允许字母数字'"></input></td>
+				</tr>
+				<tr>
+					<td>姓名:</td>
+					<td><input class="easyui-textbox" type="text" name="realName"
+						data-options="required:true,validType:'realname',novalidate:true,prompt:'Enter a Chinese name...'"></input></td>
+				</tr>
+				
+				<tr>
+					<td>性别:</td>
+					<td><input type="radio" name="sex" value="1" checked="checked" />男
+						<input type="radio" name="sex" value="0" />女</td>
+				</tr>
+				<tr>
+					<td>手机:</td>
+					<td><input class="easyui-textbox" type="text" name="telephone"
+						data-options="required:true,validType:'mobile',novalidate:true,prompt:'Enter a telephone...'"></input></td>
+				</tr>
+				
+				<tr>
+					<td>地址:</td>
+				
+					<td><input id="cc" class="easyui-combobox" name="address"
+						editable="false" panelHeight="200px" value="" validType="address"
+						data-options="valueField:'addressId',textField:'addressName',url:'/address/list',prompt:'请选择...' ,novalidate:true,required:true"></td>
+
+				</tr>
+
+				<td>Email:</td>
+				<td><input class="easyui-textbox" type="text" name="mail"
+					data-options="required:true,novalidate:true,prompt:'Enter a email address...'"
+					validType="mail"></input></td>
+				</tr>
+	
+			</table>
+		</form>
+	</div>
+	<div id="dlgedit" class="easyui-dialog"
+		style="width: 300px; height: 400px; padding: 10px 20px" closed="true"
+		buttons="#dlg-buttons-edit">
+		<form method="post" id="fmedit" class="easyui-from">
+			<table cellpadding="5">
+			
+				<input type="hidden" name="id"></input>
+				<input type="hidden" name="username"></input>
+				<!-- <input class="easyui-textbox" type="hidden" name="password"></input> -->
+                  <tr>
+					<td>密码:</td>
+					<td><input class="easyui-textbox" type="password" name="password"
+						data-options="required:true,validType:'pwds',novalidate:true,prompt:'6-16字节,允许字母数字'"></input></td>
+				</tr>
+				<tr>
+					<td>姓名:</td>
+					<td><input class="easyui-textbox" type="text" name="realName"
+						data-options="required:true,validType:'CHS',novalidate:true,prompt:'Enter a Chinese name...'"></input></td>
+				</tr>
+
+				<tr>
+					<td>性别:</td>
+					<td><input type="radio" name="sex" value="1" />男
+						<input type="radio" name="sex" value="0" />女</td>
+				</tr>
+				<tr>
+					<td>手机:</td>
+					<td><input class="easyui-textbox" type="text" name="telephone"
+						data-options="required:true,validType:'mobile',novalidate:true,prompt:'Enter a telephone...'"></input></td>
+				</tr>
+
+				<tr>
+					<td>地址:</td>
+
+					<td><input id="cc" class="easyui-combobox" name="address"
+						editable="false" panelHeight="200px" value="" validType="address"
+						data-options="valueField:'addressId',textField:'addressName',url:'/address/list',prompt:'请选择...' ,novalidate:true,required:true"></td>
+				</tr>
+                   <tr>
+				<td>Email:</td>
+				<td><input class="easyui-textbox" type="text" name="mail"
+					data-options="required:true,novalidate:true,prompt:'Enter a email address...'"
+					validType="mail"></input></td>
+				</tr>
+			</table>
+		</form>
+	</div>
+
+
+	<div id="dlg-buttons" style="text-align: center">
+		<a href="javascript:savefm()" class="easyui-linkbutton"
+			iconCls="icon-ok">保存</a> <a href="javascript:void()"
+			class="easyui-linkbutton" iconCls="icon-cancel"
+			onclick="$('#dlg').dialog('close')">关闭</a>
+	</div>
+	<div id="dlg-buttons-edit" style="text-align: center">
+		<a href="javascript:saveedit()" class="easyui-linkbutton"
+			iconCls="icon-ok">保存</a> <a href="javascript:void()"
+			class="easyui-linkbutton" iconCls="icon-cancel"
+			onclick="$('#dlgedit').dialog('close')">关闭</a>
+	</div>
+
+</body>
+</html>

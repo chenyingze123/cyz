@@ -1,0 +1,53 @@
+@charset "UTF-8";
+
+
+
+.tabs-panels>.panel>.panel-body {
+		overflow: hidden;
+	}
+/*  .tree-node> .tree-node-selected{
+	display:none;
+}  */
+	
+/* #_easyui_tree_1{
+	
+	display:none;
+} 
+
+#_easyui_tree_6{
+	
+	display:none;
+}  */
+/* #_easyui_tree_5{
+	
+	display:none;
+} 
+#_easyui_tree_11{
+	
+	display:none;
+}
+#_easyui_tree_1{
+	
+	display:none;
+}
+#_easyui_tree_10{
+	
+	display:none;
+} */
+#_easyui_tree_1{
+	
+	display:none;
+}
+#_easyui_tree_4{
+	
+	display:none;
+}
+.panel-tool{
+	display:none;
+}
+.tree-node tree-node-selected{
+	display:none;
+}
+/* .tree-node tree-node-selected */
+
+ 

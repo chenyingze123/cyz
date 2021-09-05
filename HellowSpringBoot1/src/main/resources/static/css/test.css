@@ -1,0 +1,19 @@
+/* @charset "UTF-8";
+
+
+.tabs-panels>.panel>.panel-body {
+		overflow: hidden;
+	}
+tree-node> .tree-node-selected{
+	display:none;
+}
+	
+#_easyui_tree_1{
+	
+	display:none;
+} 
+.panel-icon, .panel-tool{
+	display:none;
+}
+
+  */

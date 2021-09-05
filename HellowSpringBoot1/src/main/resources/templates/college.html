@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8" />
+<title>学院表格</title>
+<link rel="stylesheet" type="text/css"
+	href="me/jquery-easyui-1.6.6/themes/default/easyui.css" />
+<link rel="stylesheet" type="text/css"
+	href="me/jquery-easyui-1.6.6/themes/icon.css" />
+<link rel="stylesheet" type="text/css"
+	href="me/jquery-easyui-1.6.6/demo.css" />
+<script type="text/javascript" src="me/jquery-easyui-1.6.6/jquery.min.js"></script>
+<script type="text/javascript"
+	src="me/jquery-easyui-1.6.6/jquery.easyui.min.js"></script>
+<link rel="stylesheet" type="text/css" href="css/test.css" />
+<!-- <script type="text/javascript" src="js/address.js"></script> -->
+<script type="text/javascript" src="js/datagrid2.js"></script>		
+<script type="text/javascript" src="js/validator.js"></script>
+<script type="text/javascript" src="js/page.js"></script>
+<script type="text/javascript" src="js/search.js"></script>
+<script type="text/javascript" src="js/datagrid-filter.js"></script> 
+<style >.icon-filter{
+			background:url('filter.png') no-repeat center center;
+		}</style>
+<script type="text/javascript">
+$(function(){
+	displayMsg();		
+})
+function displayMsg() {  
+		$('#dg').datagrid('getPager').pagination({  
+			 pageSize: 10,//每页显示的记录条数，默认为10   
+			 pageList: [10,20,50,100,200],//可以设置每页记录条数的列表   
+			 beforePageText: '第',//'第',//页数文本框前显示的汉字   
+			 afterPageText: '页    共 {pages} 页', //'页    共 {pages} 页',  
+			 displayMsg: '当前显示 {from} - {to} 条记录   共 {total} 条记录' 
+	   });  
+	};
+function openEdit(){
+	var selectedRows = $("#dg").datagrid('getSelections');
+	if (selectedRows.length != 1) {
+		$.messager.alert("系统提示", "请选择一条要编辑的数据！");
+		return;
+	}
+	var row = selectedRows[0];
+	
+	$("#fmedit").form("load", row);
+	$("#dlg-edit").dialog("open");
+}
+function savefm() {
+                      
+	$.ajax({
+		url : "/center/collegeAdd",
+		type : "POST",
+		data : $('#fmadd').serialize(),
+		/*
+		 * onSubmit : function() { return $(this).form("validate"); },
+		 */
+		success : function(res) {
+			
+			if (res === "success") {
+				$("" + ".easyui-datagrid").datagrid("reload");
+				$.messager.alert("系统提示", "保存成功");
+				$("#dlg-add").dialog("close");
+				$('#dlg-add').form('clear');
+				
+				
+				
+			} if (res === "error1"){
+				$.messager.alert('系统提示', '学院已存在!', "warning");
+				//$.messager.alert("系统提示", "账号已存在");
+			} 
+			if (res === "error"){
+				$.messager.alert("系统提示", "系统异常");
+			}
+		},
+		error : function() {
+			 $.messager.show({
+                 title : '提示',
+                 msg : '系统错误，请联系管理员------'
+             });
+			console.log("ajax error");
+			$("#dlg").dialog("close");
+			
+		}
+	})
+        
+};
+
+function editfm() {
+    
+	$.ajax({
+		url : "/center/collegeEdit",
+		type : "POST",
+		data : $('#fmedit').serialize(),
+		/*
+		 * onSubmit : function() { return $(this).form("validate"); },
+		 */
+		success : function(res) {
+			
+			if (res === "success") {
+				$("" + ".easyui-datagrid").datagrid("reload");
+				$.messager.alert("系统提示", "保存成功");
+				$("#dlg-edit").dialog("close");
+				$('#dlg-edit').form('clear');
+				
+				
+				
+			} if (res === "error1"){
+				$.messager.alert('系统提示', '学院已存在!', "warning");
+				//$.messager.alert("系统提示", "账号已存在");
+			} 
+			if (res === "error"){
+				$.messager.alert("系统提示", "系统异常");
+			}
+		},
+		error : function() {
+			 $.messager.show({
+                 title : '提示',
+                 msg : '系统错误，请联系管理员------'
+             });
+			console.log("ajax error");
+			$("#dlg-edit").dialog("close");
+			
+		}
+	})
+        
+};
+function deleteRows(){
+	var rows = $('#dg').datagrid('getChecked');
+	//console.log(rows);
+	if(rows.length==0){
+		$.messager.alert('操作提示', '请至少选择一行删除!', "warning");
+	}
+	for (var i = rows.length - 1; i >= 0; i--) {
+		var rowIndex = $('#dg').datagrid('getRowIndex', rows[i]);
+		//console.log(rowIndex);
+		var id = rows[i].id;
+		$.ajax({
+			type : "GET",
+			url : "/center/collegeDel?id=" + id,
+			async : false,
+			success : function(data) {
+
+				$('#dg').datagrid('deleteRow', rowIndex);
+			},
+			error : function(data) {
+				
+				alert("删除失败");
+			}
+		});
+
+	}
+}
+	
+
+</script> 
+</head>
+<body>
+
+	
+	<table id="dg" class="easyui-datagrid" title="学院信息"
+		style="width: 100%; height: 400px"
+		data-options="iconCls:'icon-edit',rownumbers:true,collapsible:true,url:'/center/collegeList',method:'get',fitColumns:true,onClickCell:onClickCell,autoRowHeight:false,
+				pagination:true,
+				pageSize:10"
+		toolbar="#tb">
+		<thead>
+			<tr>
+				<th data-options="field:'ck',checkbox:true"></th>
+			   <!--  <th data-options="field:'addressId',align:'center'" >ID</th> -->			
+				<th data-options="field:'name',align:'left',halign: 'left'" width="20%">学院名称</th>
+				<th data-options="field:'message',align:'left',halign: 'left'" width="20%">学院备注</th>
+		</thead>
+
+	</table>
+
+	<div id="tb">
+		<div>
+			<a href="javascript:void(0)" class="easyui-linkbutton"
+				iconCls="icon-add" plain="true" onclick="$('#dlg-add').dialog('open')">添加</a>
+				<a href="javascript:openEdit()" class="easyui-linkbutton"
+				iconCls="icon-edit" plain="true">修改</a>
+			<a href="javascript:deleteRows()" class="easyui-linkbutton"
+				iconCls="icon-remove" plain="true">删除</a> 
+		</div>
+	</div>
+	
+	<div id="dlg-add" class="easyui-dialog"
+		style="width: 350px; height: 250px; padding: 10px 20px" closed="true"
+		buttons="#dlg-buttons" title="添加信息">
+		<form method="post" id="fmadd" class="easyui-from">
+			<table cellpadding="5">
+					<tr>
+					<td>学院名称:</td>
+					<td><input class="easyui-textbox" type="text" name="name"></input></td>
+				</tr>
+				 <tr>
+					<td>学院信息:</td>
+					<td><input class="easyui-textbox" type="text" name="message"></input></td>
+				</tr>
+			</table>
+		</form>
+	</div>
+	
+	<div id="dlg-edit" class="easyui-dialog"
+		style="width: 350px; height: 250px; padding: 10px 20px" closed="true"
+		buttons="#dlg-buttons-edit" title="修改信息">
+		<form method="post" id="fmedit" class="easyui-from">
+			<table cellpadding="5">
+			
+								
+				<tr>
+				<input  type="hidden" name="id"></input>
+					<td>学院名称:</td>
+					<td><input class="easyui-textbox" type="text" name="name"></input></td>
+				</tr>
+				
+				 <tr>
+					<td>学院信息:</td>
+					<td><input class="easyui-textbox" type="text" name="message"></input></td>
+				</tr>
+
+			</table>
+		</form>
+	</div>
+
+
+	<div id="dlg-buttons" style="text-align: center">
+		<a href="javascript:savefm()" class="easyui-linkbutton"
+			iconCls="icon-ok">保存</a> <a href="javascript:void()"
+			class="easyui-linkbutton" iconCls="icon-cancel"
+			onclick="$('#dlg-add').dialog('close')">关闭</a>
+	</div>
+	<div id="dlg-buttons-edit" style="text-align: center">
+		<a href="javascript:editfm()" class="easyui-linkbutton"
+			iconCls="icon-ok">保存</a> <a href="javascript:void()"
+			class="easyui-linkbutton" iconCls="icon-cancel"
+			onclick="$('#dlg-edit').dialog('close')">关闭</a>
+	</div>
+
+
+
+</body>
+</html>
